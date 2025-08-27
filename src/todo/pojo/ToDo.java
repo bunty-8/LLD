@@ -1,4 +1,4 @@
-package pojo;
+package todo.pojo;
 
 public class ToDo {
     private String task;

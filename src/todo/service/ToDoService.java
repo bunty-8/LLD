@@ -1,15 +1,23 @@
-package service;
+package todo.service;
 
-import pojo.ToDo;
+import todo.pojo.ToDo;
+import todo.storage.FileStorage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ToDoService {
-    private List<ToDo> todos = new ArrayList<>();
+    private List<ToDo> todos;
+    private FileStorage storage;
     private int id = 1;
+
+    public ToDoService() {
+        this.storage = new FileStorage();
+        this.todos = storage.getTodos();
+    }
+
     public void addTask(String task) {
         todos.add(new ToDo(task, id++));
+        storage.saveTodos(todos);
     }
     public void showAllTasks() {
         for(ToDo todo : todos) {
@@ -23,6 +31,7 @@ public class ToDoService {
                 System.out.println("Task is marked as done");
             }
         }
+        storage.saveTodos(todos);
     }
     public void removeTask(int id) {
         todos.removeIf(toDo -> toDo.getId() == id);
